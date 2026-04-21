@@ -1,0 +1,101 @@
+:root {
+    --primary: #6366f1;
+    --secondary: #ec4899;
+    --bg: #030712;
+    --card-bg: rgba(31, 41, 55, 0.4);
+    --border: rgba(255, 255, 255, 0.1);
+    --text: #f8fafc;
+    --text-muted: #94a3b8;
+    --success: #22c55e;
+    --error: #ef4444;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    min-height: 100vh;
+}
+
+.lab-layout {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.sidebar {
+    background: rgba(17, 24, 39, 0.8);
+    border-right: 1px solid var(--border);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-content {
+    padding: 2.5rem;
+    overflow-y: auto;
+    position: relative;
+}
+
+.glass-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.header { margin-bottom: 2rem; }
+.header h1 { font-size: 2rem; color: var(--primary); }
+.header p { color: var(--text-muted); }
+
+.console {
+    background: #000;
+    border-radius: 12px;
+    padding: 1rem;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.9rem;
+    color: #10b981;
+    height: 200px;
+    overflow-y: auto;
+    border: 1px solid #1f2937;
+}
+
+.console .line { margin-bottom: 0.25rem; }
+.console .timestamp { color: #6b7280; font-size: 0.8rem; margin-right: 0.5rem; }
+
+.btn {
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+    background: var(--primary);
+    color: white;
+}
+
+.btn:hover { opacity: 0.9; transform: translateY(-1px); }
+
+.input-field {
+    width: 100%;
+    padding: 0.75rem;
+    background: rgba(0,0,0,0.2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: white;
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 1000px) {
+    .lab-layout { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+}
