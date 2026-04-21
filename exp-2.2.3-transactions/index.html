@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exp 2.2.3 — Transaction Simulator</title>
+<link rel="stylesheet" href="../lab.css">
+<style>
+  .accounts-wrap { display:grid; grid-template-columns: repeat(auto-fit,minmax(150px,1fr)); gap:10px; margin-bottom:15px; }
+  .account-box { background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); border-radius:10px; padding:12px; text-align:center; }
+  .account-name { font-size:.75rem; color:#94a3b8; }
+  .account-balance { font-size:1.3rem; font-weight:700; color:#34d399; margin:5px 0; transition:.3s; }
+  .flash-red { color:#f87171; }
+  .flash-green { color:#34d399; }
+
+  .log-box { max-height:200px; overflow-y:auto; }
+  .log-row { display:flex; justify-content:space-between; padding:9px; border-radius:8px; margin-bottom:5px; font-size:.78rem; }
+  .success { background:rgba(52,211,153,.08); border-left:3px solid #34d399; }
+  .fail { background:rgba(248,113,113,.08); border-left:3px solid #f87171; }
+  .warn { background:rgba(251,191,36,.08); border-left:3px solid #fbbf24; }
+
+  .status-dot { width:10px; height:10px; border-radius:50%; }
+  .green { background:#34d399; }
+  .red { background:#f87171; }
+  .yellow { background:#fbbf24; animation:blink .8s infinite; }
+  @keyframes blink { 50% { opacity:.3; } }
+</style>
+</head>
+<body>
+<div class="lab-container">
+  <a href="../index.html" class="back-btn">← Back</a>
+
+  <div class="lab-header">
+    <div class="exp-badge">Exp 2.2.3</div>
+    <h1>Transaction Engine</h1>
+    <p>ACID Simulation · Commit / Rollback</p>
+  </div>
+
+  <div class="lab-card">
+    <h2 class="card-title">🏦 Accounts</h2>
+
+    <div class="accounts-wrap" id="accountArea"></div>
+
+    <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px;">
+      <div class="status-dot" id="stateDot" style="background:#64748b;"></div>
+      <span id="stateText" style="color:#64748b;">Idle session</span>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px;">
+      <select class="lab-input" id="sender"><option>Alice</option><option>Bob</option><option>Carol</option></select>
+      <select class="lab-input" id="receiver"><option>Bob</option><option>Alice</option><option>Carol</option></select>
+      <input class="lab-input" type="number" id="amount" value="500">
+    </div>
+
+    <div style="display:flex; gap:10px;">
+      <button class="lab-btn" onclick="processTxn('commit')">✔ Commit</button>
+      <button class="lab-btn" style="background:#3f1d1d;color:#f87171;" onclick="processTxn('rollback')">↩ Rollback</button>
+      <button class="lab-btn" style="background:#3f320d;color:#fbbf24;" onclick="processTxn('fail')">⚠ Fail</button>
+    </div>
+  </div>
+
+  <div class="lab-card">
+    <h2 class="card-title">📜 Transaction Logs</h2>
+    <div class="log-box" id="logArea">
+      <div style="text-align:center;color:#64748b;padding:15px;">No activity yet...</div>
+    </div>
+  </div>
+</div>
+
+<script>
+let accountData = { Alice: 5000, Bob: 3000, Carol: 2000 };
+
+function displayAccounts() {
+  document.getElementById('accountArea').innerHTML = Object.entries(accountData).map(([n,b]) =>
+    `<div class="account-box">
+        <div class="account-name">${n}</div>
+        <div class="account-balance" id="bal-${n}">₹${b}</div>
+     </div>`
+  ).join('');
+}
+
+function logTxn(type, msg) {
+  const box = document.getElementById('logArea');
+  const cls = type === 'commit' ? 'success' : type === 'rollback' ? 'fail' : 'warn';
+  const row = document.createElement('div');
+  row.className = `log-row ${cls}`;
+  row.innerHTML = `<span>${msg}</span><span>${type.toUpperCase()}</span>`;
+  if (box.children[0]?.textContent.includes('No activity')) box.innerHTML = '';
+  box.prepend(row);
+}
+
+function setState(state) {
+  const dot = document.getElementById('stateDot');
+  const text = document.getElementById('stateText');
+
+  if(state === 'active'){ dot.className='status-dot yellow'; text.innerText='Processing...'; }
+  else if(state === 'done'){ dot.className='status-dot green'; text.innerText='Success'; }
+  else { dot.className='status-dot red'; text.innerText='Aborted'; }
+}
+
+function processTxn(mode) {
+  const from = sender.value;
+  const to = receiver.value;
+  const amt = parseInt(amount.value);
+
+  if(from === to) return alert('Same account not allowed');
+
+  setState('active');
+
+  setTimeout(() => {
+    if(mode === 'fail' || accountData[from] < amt){
+      setState('error');
+      logTxn('warn', `${from} → ${to} failed (insufficient funds)`);
+      return;
+    }
+
+    if(mode === 'rollback'){
+      setState('error');
+      logTxn('rollback', `${from} → ${to} rolled back`);
+      return;
+    }
+
+    accountData[from] -= amt;
+    accountData[to] += amt;
+
+    document.getElementById(`bal-${from}`).innerText = '₹' + accountData[from];
+    document.getElementById(`bal-${to}`).innerText = '₹' + accountData[to];
+
+    setState('done');
+    logTxn('commit', `${from} → ${to} ₹${amt}`);
+  }, 1000);
+}
+
+displayAccounts();
+</script>
+</body>
+</html>
