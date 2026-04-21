@@ -1,0 +1,102 @@
+:root {
+    --primary: #6366f1;
+    --secondary: #ec4899;
+    --bg: #030712;
+    --card-bg: rgba(17, 24, 39, 0.7);
+    --border: rgba(255, 255, 255, 0.1);
+    --text: #f8fafc;
+    --text-muted: #94a3b8;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    min-height: 100vh;
+    padding: 2rem;
+    overflow-x: hidden;
+}
+
+.glow {
+    position: fixed;
+    top: -10%;
+    left: -10%;
+    width: 120%;
+    height: 120%;
+    background: radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 60%);
+    z-index: -1;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 4rem auto;
+}
+
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    transition: color 0.3s;
+}
+
+.back-btn:hover { color: var(--primary); }
+
+.hero { margin-bottom: 4rem; }
+.hero h1 { font-size: 3rem; margin-bottom: 1rem; }
+.hero p { color: var(--text-muted); font-size: 1.2rem; }
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.card {
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2rem;
+    transition: all 0.4s;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    border-color: var(--primary);
+    background: rgba(17, 24, 39, 0.9);
+}
+
+.icon {
+    width: 50px;
+    height: 50px;
+    background: rgba(99, 102, 241, 0.1);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+}
+
+.card h3 { font-size: 1.5rem; margin-bottom: 0.75rem; }
+.card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; flex: 1; }
+
+.enter-btn {
+    margin-top: 1.5rem;
+    padding: 0.75rem;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.card:hover .enter-btn { background: var(--primary); color: white; }
