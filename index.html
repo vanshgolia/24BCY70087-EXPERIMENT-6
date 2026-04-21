@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiment 06 — Backend Dashboard</title>
+    <link rel="stylesheet" href="hub.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="glow"></div>
+
+    <div class="wrapper">
+        <a href="../index.html" class="back-btn">← Back</a>
+
+        <header class="hero">
+            <h1>Experiment <span>06</span></h1>
+            <p>Node.js Backend Concepts — middleware flow, authentication, and transactional database operations.</p>
+        </header>
+
+        <section class="card-section">
+            <a href="exp-2.2.1-middleware/index.html" class="card">
+                <div class="icon"><i data-lucide="shuffle"></i></div>
+                <h3>Middleware Flow</h3>
+                <p>Simulate request pipelines with logging, validation, and centralized error handling.</p>
+                <div class="enter-btn">Open Lab</div>
+            </a>
+
+            <a href="exp-2.2.2-jwt-auth/index.html" class="card">
+                <div class="icon"><i data-lucide="lock"></i></div>
+                <h3>Auth System</h3>
+                <p>Secure routes using token-based authentication, hashing, and access control.</p>
+                <div class="enter-btn">Open Lab</div>
+            </a>
+
+            <a href="exp-2.2.3-transactions/index.html" class="card">
+                <div class="icon"><i data-lucide="server"></i></div>
+                <h3>DB Transactions</h3>
+                <p>Visualize commit, rollback, and ACID behavior with live balance updates.</p>
+                <div class="enter-btn">Open Lab</div>
+            </a>
+        </section>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
